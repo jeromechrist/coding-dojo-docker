@@ -19,6 +19,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 choco --version
 choco list -l -a
 
+# Enable-WindowsOptionalFeature -Online -FeatureName containers –All
+# Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All
+
 $Packages = 'docker-for-windows+18.06.1.19507', 'jq+1.5', 'vscode+1.28.2', 'azure-cli+2.0.47'
 ForEach ($Package in $Packages)
 {
