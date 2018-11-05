@@ -16,9 +16,9 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 # Introduction : What is Docker
 ![whatis](https://d1.awsstatic.com/Developer%20Marketing/containers/monolith_2-VM-vs-Containers.78f841efba175556d82f64d1779eb8b725de398d.png "whatis")
 
->*Containers aren't VMs. They offer isolation not vritualization. 
->
-The host and container OSs must be the same.* 
+>Containers aren't VMs. They offer isolation not virtualization. 
+
+>The host and container OSs must be the same. 
 
 Main Benefits are    
 - portability
