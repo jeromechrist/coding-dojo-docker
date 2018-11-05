@@ -47,55 +47,156 @@ https://github.com/docker-library/hello-world
 
 # docker run
 
+Here we demonstrate 
+- how the containers are running (and exiting)
+- how to check the list of running containers
+- how to check the list of all containers
+- how to filter the list
+- how to prevent the container to exit immediately
+- how to run a container in background
+- how to run a rabbitmq container and port forward
+- how to check the ports forwarding and logs
+
+commands :
+
 ```
 docker ps
-```
-
-```
 docker ps -a
-```
-
-```
 docker ps -a --filter "name=hello-world"
-```
-
-```
 docker ps -a -q --filter "name=hello-world" | ForEach-Object {docker inspect $_}
-```
-
-```
 docker run -it ubuntu bash
-```
-
-```
 docker run -d -p 15672:15672 rabbitmq:3.7.8-management
-```
-
-```
 docker port #id
-```
-
-```
 docker logs
 ```
 
 # Layers
 
+Here we explain (simply) 
+- what are the layers of an image
+- how to see them.
+- What about passwords ?
+
+commands:
+
 we can see the layers with
 
 ```
 docker history hello-world
-```
-
 or with an external tool such as microbadger https://microbadger.com/images/nginx
-
+```
 
 <!-- docker ps -a | grep "hello-world" -->
 <!-- docker inspect `####` | jq -r '.[0].NetworkSettings.IPAddress' -->
 <!-- docker ps -a -q --filter "name=hello-world" | ForEach-Object {docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $_} -->
 
-# let's create our own container/Dockerfile
+# 01 - exercise 1 : let's create our own Dockerfile / container
 
+> the image is the recipe, the container is the cake
+
+Here we build a Dockerfile for the aspnetapp sample
+We explain
+- build, build context, tags
+- multistage build
+- layers
+- FROM inheritance
+- CMD vs Entrypoint
+
+We build the image, show docker image ls, run the container locally to test it
+
+solution
+```
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /app
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY aspnetapp/*.csproj ./aspnetapp/
+RUN dotnet restore
+
+# copy everything else and build app
+COPY aspnetapp/. ./aspnetapp/
+WORKDIR /app/aspnetapp
+RUN dotnet publish -c Release -o out
+
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+WORKDIR /app
+COPY --from=build /app/aspnetapp/out ./
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+```
+
+```
+docker build . -t aspnetapp
+```
+
+# 02 - exercise 2 : let's create a docker registry in azure and push our image
+
+Here we push our image to a remote registry.
+
+We demo
+- creating a Azure Container Registry
+- docker login
+- tagging, pushing our image
+
+solution
+
+```
+az login
+
+az account set --subscription 65501f8a-0af8-480e-b2fe-6b0aefc81d25
+
+az group create --name coding-dojo-docker --location westeurope
+
+az acr create --name codingdojodocker -g coding-dojo-docker --admin-enabled --sku Standard
+
+{
+  "adminUserEnabled": true,
+  "creationDate": "2018-11-05T22:35:54.088289+00:00",
+  "id": "/subscriptions/65501f8a-0af8-480e-b2fe-6b0aefc81d25/resourceGroups/coding-dojo-docker/providers/Microsoft.ContainerRegistry/registries/codingdojodocker",
+  "location": "westeurope",
+  "loginServer": "codingdojodocker.azurecr.io",
+  "name": "codingdojodocker",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "coding-dojo-docker",
+  "sku": {
+    "name": "Standard",
+    "tier": "Standard"
+  },
+  "status": null,
+  "storageAccount": null,
+  "tags": {},
+  "type": "Microsoft.ContainerRegistry/registries"
+}
+
+az acr credential show --name codingdojodocker
+```
+
+```
+docker build . -t aspnetapp
+docker tag aspnetapp codingdojodocker.azurecr.io/aspnetapp:0.1
+docker push codingdojodocker.azurecr.io/aspnetapp:0.1
+
+!! don't do it (the audiance) but to demonstrate that the pulled one is working as the same as the local one
+docker rm -f $(docker ps -a -q)
+docker image prune
+docker image rm codingdojodocker.azurecr.io/aspnetapp:0.1
+docker run -p 9009:80 codingdojodocker.azurecr.io/aspnetapp
+!!
+
+```
+
+# 03 - exercise - 3 this linux stuff is cool but what about windows tho ?
+
+Here we demonstrate the images windows server core / nanoserver
+
+The audience is following this part of
+- building a dockerfile for a classic aspnet app running on IIS
+- executing the container based off this image
+- maybe a few words about the MTA program
+- maybe a few words about running a hybrid swarm
+
+The audience could do this but because of the size of the windows images (500mb per image per attendee....)
 
 
 # develop ASP.NET Core Applications in a Container
