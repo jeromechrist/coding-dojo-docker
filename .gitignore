@@ -177,7 +177,7 @@ ClientBin/
 *.publishsettings
 node_modules/
 bower_components/
-wwwroot/
+# wwwroot/
 
 
 orleans.codegen.cs
