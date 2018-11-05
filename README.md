@@ -79,8 +79,6 @@ Here we explain (simply)
 
 commands:
 
-we can see the layers with
-
 ```
 docker history hello-world
 or with an external tool such as microbadger https://microbadger.com/images/nginx
@@ -183,8 +181,10 @@ docker image prune
 docker image rm codingdojodocker.azurecr.io/aspnetapp:0.1
 docker run -p 9009:80 codingdojodocker.azurecr.io/aspnetapp
 !!
-
 ```
+Let's deploy this container to an Azure Web App
+
+TODO
 
 # 03 - exercise - 3 this linux stuff is cool but what about windows tho ?
 
@@ -199,37 +199,46 @@ The audience is following this part of
 The audience could do this but because of the size of the windows images (500mb per image per attendee....)
 
 
-# develop ASP.NET Core Applications in a Container
+# Volumes
+
+Intro with a cool tip to develop ASP.NET Core Applications in a Container
 
 ```
 PS C:\work\coding-dojo-docker\099-develop-core-container> docker run --rm -it -p 9000:80 -v ${PWD}:/app/ -w /
 app/aspnetapp microsoft/dotnet:2.1-sdk dotnet watch run
 ```
 
-### compose
+# Compose
+
+Here we demonstrate 
+- starting a few services using a docker-compose.yml 
+- the usage of Traefik
+- (few) words on networking
+- (few) words on services and scaling, deployment, resource constraint
 
 ```
 $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
-```
-
-```
 docker-compose up
-```
-
-```
 docker-compose scale whoami=4
 ```
 
-## secrets
+# Secrets
 
-### service (pas trop sûr d'en parler, ptete viteuf)
+...
 
-### portainer
+# Swarm management tool
+
+Here we talk about tools such as
+- portainer
+- rancher v1
+- docker EE
 
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
 
-### 03 - our own build agent
+### cool use case 1 - our own build agent ?
 
-### 04 - vulnerability scan
+### cool use case 2 - vulnerability scan
 
-### 05 - sidecar ... logs ?
+### cool use case 3 - sidecar ... logs ?
+
+### cool use case 4 - SchemaCrawler ?
