@@ -184,7 +184,17 @@ docker run -p 9009:80 codingdojodocker.azurecr.io/aspnetapp
 ```
 Let's deploy this container to an Azure Web App
 
-TODO
+```
+az appservice plan create --name coding-dojo-docker --resource-group coding-dojo-docker --location westeurope --is-linux --sku S1
+
+-- kek https://github.com/Azure/azure-cli/issues/7013 -- 
+
+az webapp create --name coding-dojo-docker --resource-group coding-dojo-docker --plan coding-dojo-docker --deployment-container-image-name hello-world
+
+az webapp config container set --docker-registry-server-url http://codingdojodocker.azurecr.io --docker-custom-image-name codingdojodocker.azurecr.io/aspnetapp:latest --docker-registry-server-user codingdojodocker --docker-registry-server-password brrrrrrrrr --name coding-dojo-docker --resource-group coding-dojo-docker
+
+az webapp config container set --name coding-dojo-docker --resource-group coding-dojo-docker 
+```
 
 # 03 - exercise - 3 this linux stuff is cool but what about windows tho ?
 
@@ -214,9 +224,13 @@ pray so that this is the first and last time you use windows containers
 Intro with a cool tip to develop ASP.NET Core Applications in a Container
 
 ```
-PS C:\work\coding-dojo-docker\099-develop-core-container> docker run --rm -it -p 9000:80 -v ${PWD}:/app/ -w /
-app/aspnetapp microsoft/dotnet:2.1-sdk dotnet watch run
+docker run --rm -it -p 9000:80 -v ${PWD}:/app/ -w /app/aspnetapp microsoft/dotnet:2.1-sdk dotnet watch run
 ```
+
+Here we demonstrate
+- mounting a volume in read/write
+- mounting a volume in read-only
+- share a volume with multiple containers
 
 # Compose
 
@@ -231,6 +245,8 @@ $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
 docker-compose up
 docker-compose scale whoami=4
 ```
+
+TODO: add a few more fancy stuff like constraints, wait for it, networks
 
 # Secrets
 
@@ -252,3 +268,5 @@ docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.
 ### cool use case 3 - sidecar ... logs ?
 
 ### cool use case 4 - SchemaCrawler ?
+
+# ze end
