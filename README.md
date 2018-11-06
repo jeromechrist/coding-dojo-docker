@@ -193,10 +193,16 @@ Here we demonstrate the images windows server core / nanoserver
 The audience is following this part of
 - building a dockerfile for a classic aspnet app running on IIS
 - executing the container based off this image
+- maybe a few words about lcow
 - maybe a few words about the MTA program
 - maybe a few words about running a hybrid swarm
 
 The audience could do this but because of the size of the windows images (500mb per image per attendee....)
+
+```
+switch to windows containers
+
+```
 
 
 # Volumes
