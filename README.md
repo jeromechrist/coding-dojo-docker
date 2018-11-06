@@ -192,8 +192,6 @@ az appservice plan create --name coding-dojo-docker --resource-group coding-dojo
 az webapp create --name coding-dojo-docker --resource-group coding-dojo-docker --plan coding-dojo-docker --deployment-container-image-name hello-world
 
 az webapp config container set --docker-registry-server-url http://codingdojodocker.azurecr.io --docker-custom-image-name codingdojodocker.azurecr.io/aspnetapp:latest --docker-registry-server-user codingdojodocker --docker-registry-server-password brrrrrrrrr --name coding-dojo-docker --resource-group coding-dojo-docker
-
-az webapp config container set --name coding-dojo-docker --resource-group coding-dojo-docker 
 ```
 
 # 03 - exercise - 3 this linux stuff is cool but what about windows tho ?
