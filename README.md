@@ -201,9 +201,13 @@ The audience could do this but because of the size of the windows images (500mb 
 
 ```
 switch to windows containers
+we published a classic (full framework, not dotnet core) asp.net app to ./aspnetapp-classic (from https://github.com/addianto/todo-mvc-dotnet)
 
+docker build . -t aspnetapp-classic
+docker run -P aspnetapp-classic
+
+pray so that this is the first and last time you use windows containers
 ```
-
 
 # Volumes
 
