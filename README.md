@@ -257,6 +257,20 @@ TODO: add a few more fancy stuff like constraints, wait for it, networks
 
 # Secrets
 
+Here we demonstrate
+
+- how to create a secret in docker
+- how to mount this secret in a container
+- how to access it from an aspnet core app
+
+```
+docker secret create some_secret_password
+docker secret ls
+
+```
+
+Rotate a secret ?
+
 ...
 
 # Swarm management tool
