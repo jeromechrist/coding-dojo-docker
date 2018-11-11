@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  aspnetapp:
+    build: ../010-exercise-1-dockerfile
+    image: aspnetapp
+    ports:
+    - "8082:80"     # The HTTP port
+    environment: 
+      - ASPNETCORE_URLS=http://+:80
+    secrets:
+      - dbpassword
+
+secrets:
+  dbpassword:
+    file: ./dbpassword.txt
+  # my_other_secret:
+  #   external: true
