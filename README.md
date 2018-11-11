@@ -273,7 +273,65 @@ docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.
 
 ### cool use case 1 - our own build agent ?
 
-### cool use case 2 - vulnerability scan
+### cool use case 2 - vulnerability scan with Zap
+
+Go to Zap folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetnetapp
+docker-compose up zap
+```
+
+[OWASP Site](https://github.com/zaproxy/zaproxy)
+
+### cool use case 3 - Website analysis
+
+Go to SiteSpeed folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetnetapp
+docker-compose up sitespeed
+```
+
+A website will be generated in .\sitespeed-result\aspnetapp\ describing the performance of the site.
+
+Please note that results can be aggregated to Graphite / InfluxDb and viewed through Grafana.
+
+[Sitespeed](https://www.sitespeed.io/)
+
+### cool use case 4 - Test using headless browser
+
+Go to RobotFramework folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetnetapp
+docker-compose up -d chrome
+docker-compose up test-gc
+```
+
+Go to ./results/gc
+
+You can iterate on tests just by typing again 
+
+```docker
+docker-compose up test-gc
+```
+
+You can switch to firefox:
+
+```docker
+docker-compose up -d firefox
+docker-compose up test-ff
+```
+
+[Robot Framework](http://robotframework.org/)
+
 
 ### cool use case 3 - sidecar ... logs ?
 
