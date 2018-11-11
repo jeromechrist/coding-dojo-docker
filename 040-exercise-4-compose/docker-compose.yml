@@ -31,6 +31,11 @@ services:
       - backend
     depends_on:
       - reverse-proxy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1s
+      timeout: 10s
+      retries: 3
     deploy: # This node only takes effect in a swarm with stack deploy
       placement:
         constraints:
