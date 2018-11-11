@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    networks:
+      - public
+      - backend
+    
+  whoami:
+    image: jeromechrist/whoami:latest # A container that exposes an API to show its IP address
+    networks:
+      - backend
+
+networks:
+  public:
+  backend:

@@ -1,0 +1,5 @@
+robotframework==3.0.2
+selenium==3.13.0
+robotframework-selenium2library==3.0.0
+robotframework-angularjs
+robotframework-pabot
