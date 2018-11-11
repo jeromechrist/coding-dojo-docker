@@ -175,7 +175,7 @@ docker build . -t aspnetapp
 docker tag aspnetapp codingdojodocker.azurecr.io/aspnetapp:0.1
 docker push codingdojodocker.azurecr.io/aspnetapp:0.1
 
-!! don't do it (the audiance) but to demonstrate that the pulled one is working as the same as the local one
+!! don't do it (the audience) but to demonstrate that the pulled one is working as the same as the local one
 docker rm -f $(docker ps -a -q)
 docker image prune
 docker image rm codingdojodocker.azurecr.io/aspnetapp:0.1
