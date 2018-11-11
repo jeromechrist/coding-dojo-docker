@@ -264,6 +264,7 @@ Here we demonstrate
 - how to access it from an aspnet core app
 
 ```
+below : for swarm, not needed with compose. maybe a we will do a swarm init if we have time
 docker swarm init
 docker secret create .\050-exercise-5-secrets\dbpassword.txts
 docker secret ls
