@@ -279,8 +279,8 @@ Second we need to create a Personal Acess Token (PAT) with the following permiss
 m42nwothbdeey2qjjk2vsb5wcg4r45qy2ji2efpxekw77vxzgbsq
 
 ```
-docker run -e VSTS_ACCOUNT=jeromechrist -e VSTS_TOKEN=m42nwothbdeey2qjjk2vsb5wcg4r
-45qy2ji2efpxekw77vxzgbsq -e VSTS_POOL=coding-dojo-docker microsoft/vsts-agent:ubuntu-16.04
+docker build . -t agent
+docker run --rm -e VSTS_ACCOUNT=jeromechrist -e VSTS_TOKEN=m42nwothbdeey2qjjk2vsb5wcg4r45qy2ji2efpxekw77vxzgbsq -e VSTS_POOL=coding-dojo-docker -e DOTNET_CLI_TELEMETRY_OPTOUT=true agent
 ```
 
 ### cool use case 2 - vulnerability scan with Zap
