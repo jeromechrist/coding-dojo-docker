@@ -29,6 +29,8 @@ services:
       - "traefik.default.protocol=http"
     networks:
       - backend
+    depends_on:
+      - reverse-proxy
     deploy: # This node only takes effect in a swarm with stack deploy
       placement:
         constraints:
