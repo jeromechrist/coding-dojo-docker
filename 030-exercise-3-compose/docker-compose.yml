@@ -25,7 +25,6 @@ services:
     labels:
       - "traefik.backend=whoami"
       - "traefik.frontend.rule=Path: /whoami/"
-      - "traefik.backend.port=9001"
       - "traefik.default.protocol=http"
     networks:
       - backend
