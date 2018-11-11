@@ -244,6 +244,7 @@ Here we demonstrate
 
 - starting a few services using a docker-compose.yml
 - the usage of Traefik
+- wait for it
 - (few) words on networking
 - (few) words on services and scaling, deployment, resource constraint
 - healthcheck
@@ -253,8 +254,6 @@ $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
 docker-compose up
 docker-compose scale whoami=4
 ```
-
-TODO: add a few more fancy stuff like constraints, wait for it, networks
 
 # Secrets
 
@@ -286,7 +285,6 @@ Rotate a secret ?
 Here we talk about tools such as
 
 - portainer
-- rancher v1
 - docker EE
 
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
