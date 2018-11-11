@@ -273,6 +273,16 @@ docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.
 
 ### cool use case 1 - our own build agent ?
 
+First we need to create our agent pool (https://jeromechrist.visualstudio.com/_settings/agentpools?_a=agents&poolId=8)
+
+Second we need to create a Personal Acess Token (PAT) with the following permissions :Agent Pools(read, manage), Build (Read & Execute), Code (Read & Write)
+m42nwothbdeey2qjjk2vsb5wcg4r45qy2ji2efpxekw77vxzgbsq
+
+```
+docker run -e VSTS_ACCOUNT=jeromechrist -e VSTS_TOKEN=m42nwothbdeey2qjjk2vsb5wcg4r
+45qy2ji2efpxekw77vxzgbsq -e VSTS_POOL=coding-dojo-docker microsoft/vsts-agent:ubuntu-16.04
+```
+
 ### cool use case 2 - vulnerability scan with Zap
 
 Go to Zap folder
