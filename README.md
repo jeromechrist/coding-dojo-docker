@@ -5,6 +5,7 @@ Welcome to the coding dojo for Docker. Ready to have fun with whales and contain
 ![containers](https://dvdbash.files.wordpress.com/2013/06/the-wire-tv-series-s2-e05-03-dvdbash-wordpress.jpg "containers")
 
 ## open a powershell terminal with administrative rights
+
 set the execution policy to bypass for the current session
 
 ```
@@ -16,11 +17,12 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 # Introduction : What is Docker
 ![whatis](https://d1.awsstatic.com/Developer%20Marketing/containers/monolith_2-VM-vs-Containers.78f841efba175556d82f64d1779eb8b725de398d.png "whatis")
 
->Containers aren't VMs. They offer isolation not virtualization. 
+>Containers aren't VMs. They offer isolation not virtualization.
 
->The host and container OSs must be the same. 
+>The host and container OSs must be the same.
 
-Main Benefits are    
+Main Benefits are
+
 - portability
 - efficiency
 - productivity
@@ -47,7 +49,8 @@ https://github.com/docker-library/hello-world
 
 # docker run
 
-Here we demonstrate 
+Here we demonstrate
+
 - how the containers are running (and exiting)
 - how to check the list of running containers
 - how to check the list of all containers
@@ -72,7 +75,8 @@ docker logs
 
 # Layers
 
-Here we explain (simply) 
+Here we explain (simply)
+
 - what are the layers of an image
 - how to see them.
 - What about passwords ?
@@ -94,6 +98,7 @@ or with an external tool such as microbadger https://microbadger.com/images/ngin
 
 Here we build a Dockerfile for the aspnetapp sample
 We explain
+
 - build, build context, tags
 - multistage build
 - layers
@@ -133,6 +138,7 @@ docker build . -t aspnetapp
 Here we push our image to a remote registry.
 
 We demo
+
 - creating a Azure Container Registry
 - docker login
 - tagging, pushing our image
@@ -175,7 +181,7 @@ docker build . -t aspnetapp
 docker tag aspnetapp codingdojodocker.azurecr.io/aspnetapp:0.1
 docker push codingdojodocker.azurecr.io/aspnetapp:0.1
 
-!! don't do it (the audiance) but to demonstrate that the pulled one is working as the same as the local one
+!! don't do it (the audience) but to demonstrate that the pulled one is working as the same as the local one
 docker rm -f $(docker ps -a -q)
 docker image prune
 docker image rm codingdojodocker.azurecr.io/aspnetapp:0.1
@@ -199,6 +205,7 @@ az webapp config container set --docker-registry-server-url http://codingdojodoc
 Here we demonstrate the images windows server core / nanoserver
 
 The audience is following this part of
+
 - building a dockerfile for a classic aspnet app running on IIS
 - executing the container based off this image
 - maybe a few words about lcow
@@ -226,14 +233,16 @@ docker run --rm -it -p 9000:80 -v ${PWD}:/app/ -w /app/aspnetapp microsoft/dotne
 ```
 
 Here we demonstrate
+
 - mounting a volume in read/write
 - mounting a volume in read-only
 - share a volume with multiple containers
 
 # Compose
 
-Here we demonstrate 
-- starting a few services using a docker-compose.yml 
+Here we demonstrate
+
+- starting a few services using a docker-compose.yml
 - the usage of Traefik
 - (few) words on networking
 - (few) words on services and scaling, deployment, resource constraint
@@ -253,15 +262,76 @@ TODO: add a few more fancy stuff like constraints, wait for it, networks
 # Swarm management tool
 
 Here we talk about tools such as
+
 - portainer
 - rancher v1
 - docker EE
 
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
 
+## Use Cases
+
 ### cool use case 1 - our own build agent ?
 
-### cool use case 2 - vulnerability scan
+### cool use case 2 - vulnerability scan with Zap
+
+Go to Zap folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetnetapp
+docker-compose up zap
+```
+
+[OWASP Site](https://github.com/zaproxy/zaproxy)
+
+### cool use case 3 - Website analysis
+
+Go to SiteSpeed folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetnetapp
+docker-compose up sitespeed
+```
+
+A website will be generated in .\sitespeed-result\aspnetapp\ describing the performance of the site.
+
+Please note that results can be aggregated to Graphite / InfluxDb and viewed through Grafana.
+
+[Sitespeed](https://www.sitespeed.io/)
+
+### cool use case 4 - Test using headless browser
+
+Go to RobotFramework folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetnetapp
+docker-compose up -d chrome
+docker-compose up test-gc
+```
+
+Go to ./results/gc
+
+You can iterate on tests just by typing again 
+
+```docker
+docker-compose up test-gc
+```
+
+You can switch to firefox:
+
+```docker
+docker-compose up -d firefox
+docker-compose up test-ff
+```
+
+[Robot Framework](http://robotframework.org/)
+
 
 ### cool use case 3 - sidecar ... logs ?
 
