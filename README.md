@@ -358,9 +358,4 @@ docker-compose up test-ff
 
 [Robot Framework](http://robotframework.org/)
 
-
-### cool use case 3 - sidecar ... logs ?
-
-### cool use case 4 - SchemaCrawler ?
-
-# ze end
+# The end. Questions ? Rant ?
