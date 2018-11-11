@@ -246,6 +246,7 @@ Here we demonstrate
 - the usage of Traefik
 - (few) words on networking
 - (few) words on services and scaling, deployment, resource constraint
+- healthcheck
 
 ```
 $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
@@ -264,6 +265,11 @@ Here we demonstrate
 - how to access it from an aspnet core app
 
 ```
+
+docker exec -it #id sh
+cd ../run/secrets
+cat dbpassword
+
 below : for swarm, not needed with compose. maybe a we will do a swarm init if we have time
 docker swarm init
 docker secret create .\050-exercise-5-secrets\dbpassword.txts
