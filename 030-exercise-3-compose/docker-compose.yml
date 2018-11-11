@@ -26,6 +26,7 @@ services:
       - "traefik.backend=whoami"
       - "traefik.frontend.rule=Path: /whoami/"
       - "traefik.default.protocol=http"
+      - "traefik.port=80"
     networks:
       - backend
     depends_on:
