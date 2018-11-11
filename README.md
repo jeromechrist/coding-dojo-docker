@@ -264,7 +264,8 @@ Here we demonstrate
 - how to access it from an aspnet core app
 
 ```
-docker secret create some_secret_password
+docker swarm init
+docker secret create .\050-exercise-5-secrets\dbpassword.txts
 docker secret ls
 
 ```
