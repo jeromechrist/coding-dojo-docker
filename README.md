@@ -310,7 +310,7 @@ Go to Zap folder
 ```docker
 docker-compose down
 docker-compose build
-docker-compose up -d aspnetnetapp
+docker-compose up -d aspnetapp
 docker-compose up zap
 ```
 
@@ -323,7 +323,7 @@ Go to SiteSpeed folder
 ```docker
 docker-compose down
 docker-compose build
-docker-compose up -d aspnetnetapp
+docker-compose up -d aspnetapp
 docker-compose up sitespeed
 ```
 
@@ -340,7 +340,7 @@ Go to RobotFramework folder
 ```docker
 docker-compose down
 docker-compose build
-docker-compose up -d aspnetnetapp
+docker-compose up -d aspnetapp
 docker-compose up -d chrome
 docker-compose up test-gc
 ```
