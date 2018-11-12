@@ -303,20 +303,7 @@ docker build . -t agent
 docker run --rm -e VSTS_ACCOUNT=jeromechrist -e VSTS_TOKEN=m42nwothbdeey2qjjk2vsb5wcg4r45qy2ji2efpxekw77vxzgbsq -e VSTS_POOL=coding-dojo-docker -e DOTNET_CLI_TELEMETRY_OPTOUT=true agent
 ```
 
-### cool use case 2 - vulnerability scan with Zap
-
-Go to Zap folder
-
-```docker
-docker-compose down
-docker-compose build
-docker-compose up -d aspnetapp
-docker-compose up zap
-```
-
-[OWASP Site](https://github.com/zaproxy/zaproxy)
-
-### cool use case 3 - Website analysis
+### cool use case 2 - Website analysis
 
 Go to SiteSpeed folder
 
@@ -332,6 +319,19 @@ A website will be generated in .\sitespeed-result\aspnetapp\ describing the perf
 Please note that results can be aggregated to Graphite / InfluxDb and viewed through Grafana.
 
 [Sitespeed](https://www.sitespeed.io/)
+
+### cool use case 3 - vulnerability scan with Zap
+
+Go to Zap folder
+
+```docker
+docker-compose down
+docker-compose build
+docker-compose up -d aspnetapp
+docker-compose up zap
+```
+
+[OWASP Site](https://github.com/zaproxy/zaproxy)
 
 ### cool use case 4 - Test using headless browser
 
@@ -361,5 +361,18 @@ docker-compose up test-ff
 ```
 
 [Robot Framework](http://robotframework.org/)
+
+### cool use case 5 - Stress Test with Vegeta
+
+Go to Vegeta folder
+
+```docker
+docker-compose down
+docker-compose run vegeta
+```
+
+Wait 2 minutes and stares at results in output.
+
+[Vegeta Site](https://github.com/oba11/docker-vegeta)
 
 # The end. Questions ? Rants ?
