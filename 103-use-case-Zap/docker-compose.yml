@@ -1,33 +1,14 @@
 version: '3.3'
 
 services:
-  reverse-proxy:
-    image: traefik # The official Traefik docker image
-    command: --api --docker # Enables the web UI and tells Træfik to listen to docker
-    ports:
-      - "9002:8081"     # The HTTP port
-      - "8080:8080" # The Web UI (enabled by --api)
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
-      - ./traefik.toml:/traefik.toml
-      - ./server.crt:/server.crt
-      - ./server.key:/server.key
-
   aspnetapp:
-    build: ../../010-exercise-1-dockerfile
+    build: ../010-exercise-1-dockerfile
     ports:
     - "8081:80"     # The HTTP port
     environment: 
       - ASPNETCORE_URLS=http://+:80
-    labels:
-      - "traefik.backend=aspnetapp"
-      - "traefik.frontend.rule=Path: /aspnetapp/"
-      - "traefik.backend.port=8081"
-      - "traefik.default.protocol=http"
-    depends_on:
-      - reverse-proxy
-
   zap:
     image: owasp/zap2docker-weekly 
     command: zap-baseline.py -t http://aspnetapp
+    depends_on:
+      - aspnetapp
