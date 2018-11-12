@@ -1,0 +1,53 @@
+version: '3.3'
+
+services:
+  aspnetapp:
+    build: ../010-exercise-1-dockerfile
+    ports:
+    - "8081:80"     # The HTTP port
+    environment: 
+      - ASPNETCORE_URLS=http://+:80
+
+  hub:
+    image: selenium/hub:3.13.0
+    expose:
+      - 4444
+
+  chrome:
+    image: selenium/node-chrome-debug:3.13.0
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    ports:
+      - 5900:5900
+    depends_on:
+      - hub
+
+  firefox:
+    image: selenium/node-firefox-debug:3.13.0
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    ports:
+      - 5901:5900
+    depends_on:
+      - hub
+
+  test-gc:
+    build: robot
+    command: -v BROWSER:gc --outputdir /out /tests
+    volumes:
+      - ./robot/tests:/tests:ro
+      - ./results/gc:/out:rw
+    depends_on:
+      - chrome
+
+  test-ff:
+    build: robot
+    command: -v BROWSER:ff --outputdir /out /tests
+    volumes:
+      - ./robot/tests:/tests:ro
+      - ./results/ff:/out:rw
+    depends_on:
+      - firefox
+ 

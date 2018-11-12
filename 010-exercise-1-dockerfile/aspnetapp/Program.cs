@@ -20,7 +20,9 @@ namespace aspnetapp
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config)=>{ 
-                config.AddDockerSecrets();
+                config.AddDockerSecrets(((c)=>{
+                    c.Optional = true;
+                }));
             })
             .ConfigureLogging((hostingContext, logging) =>
             {

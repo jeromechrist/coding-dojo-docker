@@ -150,9 +150,9 @@ az login
 
 az account set --subscription 65501f8a-0af8-480e-b2fe-6b0aefc81d25
 
-az group create --name coding-dojo-docker --location westeurope
+az group create --name coding-dojo-docker-jch --location westeurope
 
-az acr create --name codingdojodocker -g coding-dojo-docker --admin-enabled --sku Standard
+az acr create --name codingdojodockerjch -g coding-dojo-docker-jch --admin-enabled --sku Standard
 
 {
   "adminUserEnabled": true,
@@ -173,31 +173,31 @@ az acr create --name codingdojodocker -g coding-dojo-docker --admin-enabled --sk
   "type": "Microsoft.ContainerRegistry/registries"
 }
 
-az acr credential show --name codingdojodocker
+az acr credential show --name codingdojodockerjch
 ```
 
 ```
 docker build . -t aspnetapp
-docker tag aspnetapp codingdojodocker.azurecr.io/aspnetapp:0.1
-docker push codingdojodocker.azurecr.io/aspnetapp:0.1
+docker tag aspnetapp codingdojodockerjch.azurecr.io/aspnetapp:0.1
+docker push codingdojodockerjch.azurecr.io/aspnetapp:0.1
 
 !! don't do it (the audience) but to demonstrate that the pulled one is working as the same as the local one
 docker rm -f $(docker ps -a -q)
 docker image prune
-docker image rm codingdojodocker.azurecr.io/aspnetapp:0.1
-docker run -p 9009:80 codingdojodocker.azurecr.io/aspnetapp
+docker image rm codingdojodockerjch.azurecr.io/aspnetapp:0.1
+docker run -p 9009:80 codingdojodockerjch.azurecr.io/aspnetapp
 !!
 ```
 Let's deploy this container to an Azure Web App
 
 ```
-az appservice plan create --name coding-dojo-docker --resource-group coding-dojo-docker --location westeurope --is-linux --sku S1
+az appservice plan create --name coding-dojo-docker-jch --resource-group coding-dojo-docker-jch --location westeurope --is-linux --sku S1
 
 -- kek https://github.com/Azure/azure-cli/issues/7013 -- 
 
-az webapp create --name coding-dojo-docker --resource-group coding-dojo-docker --plan coding-dojo-docker --deployment-container-image-name hello-world
+az webapp create --name coding-dojo-docker --resource-group coding-dojo-docker-jch --plan coding-dojo-docker-jch --deployment-container-image-name hello-world
 
-az webapp config container set --docker-registry-server-url http://codingdojodocker.azurecr.io --docker-custom-image-name codingdojodocker.azurecr.io/aspnetapp:latest --docker-registry-server-user codingdojodocker --docker-registry-server-password brrrrrrrrr --name coding-dojo-docker --resource-group coding-dojo-docker
+az webapp config container set --docker-registry-server-url http://codingdojodockerjch.azurecr.io --docker-custom-image-name codingdojodockerjch.azurecr.io/aspnetapp:latest --docker-registry-server-user codingdojodockerjch --docker-registry-server-password brrrrrrrrr --name coding-dojo-docker-jch --resource-group coding-dojo-docker-jch
 ```
 
 # 03 - exercise - 3 this linux stuff is cool but what about windows tho ?
@@ -244,16 +244,16 @@ Here we demonstrate
 
 - starting a few services using a docker-compose.yml
 - the usage of Traefik
+- wait for it
 - (few) words on networking
 - (few) words on services and scaling, deployment, resource constraint
+- healthcheck
 
 ```
 $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
 docker-compose up
 docker-compose scale whoami=4
 ```
-
-TODO: add a few more fancy stuff like constraints, wait for it, networks
 
 # Secrets
 
@@ -264,6 +264,11 @@ Here we demonstrate
 - how to access it from an aspnet core app
 
 ```
+
+docker exec -it #id sh
+cd ../run/secrets
+cat dbpassword
+
 below : for swarm, not needed with compose. maybe a we will do a swarm init if we have time
 docker swarm init
 docker secret create .\050-exercise-5-secrets\dbpassword.txts
@@ -280,7 +285,6 @@ Rotate a secret ?
 Here we talk about tools such as
 
 - portainer
-- rancher v1
 - docker EE
 
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
@@ -358,9 +362,4 @@ docker-compose up test-ff
 
 [Robot Framework](http://robotframework.org/)
 
-
-### cool use case 3 - sidecar ... logs ?
-
-### cool use case 4 - SchemaCrawler ?
-
-# ze end
+# The end. Questions ? Rants ?

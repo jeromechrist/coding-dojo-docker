@@ -1,0 +1,56 @@
+version: '3.3'
+
+services:
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    command: --api --docker # Enables the web UI and tells Træfik to listen to docker
+    ports:
+      - "9001:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - ./traefik.toml:/traefik.toml
+      - ./server.crt:/server.crt
+      - ./server.key:/server.key
+    networks:
+      - public
+      - backend
+    
+  whoami:
+    image: jeromechrist/whoami:latest # A container that exposes an API to show its IP address
+    environment: 
+      - ASPNETCORE_URLS=http://+:80
+      - PATH_BASE=/whoami/
+    labels:
+      - "traefik.backend=whoami"
+      - "traefik.frontend.rule=Path: /whoami/"
+      - "traefik.default.protocol=http"
+      - "traefik.port=80"
+    networks:
+      - backend
+    depends_on:
+      - reverse-proxy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1s
+      timeout: 10s
+      retries: 3
+    deploy: # This node only takes effect in a swarm with stack deploy
+      placement:
+        constraints:
+          - node.role == worker
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+      replicas: 6
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  public:
+  backend:
