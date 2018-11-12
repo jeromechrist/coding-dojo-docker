@@ -362,4 +362,17 @@ docker-compose up test-ff
 
 [Robot Framework](http://robotframework.org/)
 
+### cool use case 5 - Stress Test with Vegeta
+
+Go to Vegeta folder
+
+```docker
+docker-compose down
+docker-compose run vegeta
+```
+
+Wait 2 minutes and stares at results in output.
+
+[Vegeta Site](https://github.com/oba11/docker-vegeta)
+
 # The end. Questions ? Rants ?
