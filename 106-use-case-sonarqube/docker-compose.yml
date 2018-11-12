@@ -1,0 +1,16 @@
+version: "3.2"
+
+services:
+  sonarqube-scanner:
+    image: sonarqube-scanner
+    environment:
+      - "SonarHostUrl=http://sonarqube:9000"
+    # volumes:
+    #   - ../010-exercise-1-dockerfile/:/app
+    depends_on:
+      - sonarqube
+
+  sonarqube:
+    image: sonarqube
+    ports:
+      - 9000:9000
