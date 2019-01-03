@@ -14,7 +14,7 @@ services:
       - 4444
 
   chrome:
-    image: selenium/node-chrome-debug:3.13.0
+    image: selenium/node-chrome-debug:3.141.59
     environment:
       - HUB_PORT_4444_TCP_ADDR=hub
       - HUB_PORT_4444_TCP_PORT=4444
