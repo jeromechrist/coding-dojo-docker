@@ -9,7 +9,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
 
   hub:
-    image: selenium/hub:3.141.59
+    image: selenium/hub:4.0.0
     expose:
       - 4444
 
